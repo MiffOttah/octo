@@ -1,6 +1,6 @@
 "use strict";
 
-var audio = new AudioContext();
+var audio = null;
 
 function beep(freq){
     var oscillator = audio.createOscillator();
@@ -21,11 +21,15 @@ function shuffle(){
         divs[j].style.backgroundColor = t;
     }
 
-    if (document.getElementById("soundcheck").checked){
+    if (audio && document.getElementById("soundcheck").checked){
         beep(Math.random() * 1963 + 130);
     }
 }
 
 window.onload = function(){
+    if (window.AudioContext){
+        audio = new AudioContext();
+        document.getElementById("sound").style.display = "block";
+    }
     setInterval(shuffle, 250);
 };
